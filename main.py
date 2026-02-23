@@ -1,5 +1,6 @@
 # ticket, user, asset = core resources
 from fastapi import FastAPI
+from schemas.ticket import CreateTicket, UpdateTicket
 
 app = FastAPI() 
 
@@ -16,8 +17,8 @@ def get_ticket(ticket_id: int):
 
 # Create new ticket (POST)
 @app.post("/tickets")
-def create_ticket():
-    return {"operation": "create ticket"}
+def create_ticket(ticket: CreateTicket):
+    return {"received": ticket}
 
 
 # Replace ticket (PUT {id})
@@ -27,8 +28,8 @@ def replace_ticket(ticket_id: int):
 
 # Update ticket (PATCH {id})
 @app.patch("/tickets/{ticket_id}")
-def update_ticket(ticket_id: int):
-    return {"operation": f"update ticket {ticket_id}"}
+def update_ticket(ticket_id: int, ticket: UpdateTicket):
+    return {"id": ticket_id, "updates": ticket}
 
 # Delete ticket (DELETE {id})
 @app.delete("/tickets/{ticket_id}")
